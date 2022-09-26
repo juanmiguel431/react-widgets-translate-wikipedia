@@ -3,12 +3,23 @@ import axios from "axios";
 
 const Search = () => {
   const [term, setTerm] = useState('');
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
   const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setDebouncedTerm(term);
+    }, 500);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [term]);
 
   useEffect(() => {
     const search = async () => {
       let data;
-      if (term) {
+      if (debouncedTerm) {
         const response = await axios.get('/w/api.php', {
           baseURL: 'https://en.wikipedia.org',
           params: {
@@ -16,7 +27,7 @@ const Search = () => {
             list: 'search',
             origin: '*',
             format: 'json',
-            srsearch: term
+            srsearch: debouncedTerm
           }
         });
         data = response.data.query.search
@@ -28,7 +39,7 @@ const Search = () => {
     };
 
     search();
-  }, [term]);
+  }, [debouncedTerm]);
 
   const renderedResults = results.map(result => {
     return (
