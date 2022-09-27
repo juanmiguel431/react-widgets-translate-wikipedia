@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 const Dropdown = ({ options, selected, onChange }) => {
   const [open, setOpen] = useState(false);
+  const openRef = useRef(open);
   const ref = useRef();
+
+  useEffect(() => { openRef.current = open });
 
   useEffect(() => {
     const onBodyClick = evt => {
@@ -10,7 +13,9 @@ const Dropdown = ({ options, selected, onChange }) => {
         return;
       }
 
-      setOpen(false);
+      if (openRef.current) {
+        setOpen(false);
+      }
     };
 
     document.body.addEventListener('click', onBodyClick, { capture: true });
