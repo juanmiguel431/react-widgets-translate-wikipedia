@@ -5,6 +5,8 @@ const Dropdown = ({ options, selected, onChange }) => {
   const openRef = useRef(open);
   const ref = useRef();
 
+  //https://reactjs.org/docs/hooks-faq.html#what-can-i-do-if-my-effect-dependencies-change-too-often
+  //https://stackoverflow.com/questions/63224151/how-can-i-access-state-in-an-useeffect-without-re-firing-the-useeffect
   useEffect(() => { openRef.current = open });
 
   useEffect(() => {
