@@ -6,12 +6,12 @@ const Convert = ({ language, text }) => {
   const [debounceText, setDebouncedText] = useState(text);
 
   useEffect(() => {
-    const timerId = setInterval(() => {
+    const timerId = setTimeout(() => {
       setDebouncedText(text);
     }, 500);
 
     return () => {
-      clearInterval(timerId);
+      clearTimeout(timerId);
     };
   }, [text]);
 
