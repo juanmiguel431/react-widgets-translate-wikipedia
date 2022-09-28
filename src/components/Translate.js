@@ -1,8 +1,12 @@
 import Dropdown from "./Dropdown";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Convert from "./Convert";
 
 const options = [
+  {
+    label: 'Spanish',
+    value: 'es'
+  },
   {
     label: 'Afrikaans',
     value: 'af'
@@ -15,15 +19,22 @@ const options = [
     label: 'Hindi',
     value: 'hi'
   },
-  {
-    label: 'Spanish',
-    value: 'es'
-  }
 ];
 
 const Translate = () => {
   const [language, setLanguage] = useState(options[0]);
   const [text, setText] = useState('');
+  const [debounceText, setDebouncedText] = useState(text);
+
+  useEffect(() => {
+    const timerId = setInterval(() => {
+      setDebouncedText(text);
+    }, 750);
+
+    return () => {
+      clearInterval(timerId);
+    };
+  }, [text]);
 
   return (
     <div className="translate">
@@ -48,7 +59,7 @@ const Translate = () => {
       <h3 className="ui header">Output</h3>
       <Convert
         language={language}
-        text={text}
+        text={debounceText}
       />
     </div>
   );
