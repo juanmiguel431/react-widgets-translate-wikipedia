@@ -2,25 +2,26 @@ import { useEffect, useState } from "react";
 import GoogleTranslate from "../apis/GoogleTranslate";
 
 const Convert = ({ language, text }) => {
-  const [translatedText, setTranslatedText] = useState('');
+  const [translated, setTranslated] = useState('');
 
   useEffect(() => {
-    const googleRequest = async () => {
-      const response = await GoogleTranslate('/language/translate/v2', {
+    const doTranslation = async () => {
+      const { data } = await GoogleTranslate('/language/translate/v2', {
+        method: 'POST',
         params: {
           q: text,
           target: language.value
         }
       });
 
-      setTranslatedText(response.data.data.translations[0].translatedText);
+      setTranslated(data.data.translations[0].translatedText);
     };
-    googleRequest();
+    doTranslation();
   }, [language, text]);
 
   return (
     <div className="convert">
-      <h1>Translated text is: {translatedText}</h1>
+      <h1 className="ui header">{translated}</h1>
     </div>
   );
 }
