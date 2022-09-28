@@ -2,6 +2,7 @@
 // import Search from "./components/Search";
 import Dropdown from "./components/Dropdown";
 import { useState } from "react";
+import Translate from "./components/Translate";
 
 // const items = [
 //   {
@@ -34,15 +35,10 @@ const options = [
 ]
 
 const App = () => {
-  const [selected, setSelected] = useState(options[0]);
 
   return (
     <div className="app">
-      <Dropdown
-        options={options}
-        selected={selected}
-        onChange={setSelected}
-      />
+      <Translate />
     </div>
   );
 }
