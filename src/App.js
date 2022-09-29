@@ -4,6 +4,7 @@ import Dropdown from "./components/Dropdown";
 import { useState } from "react";
 import Translate from "./components/Translate";
 import Route from "./components/Route";
+import Header from "./components/Header";
 
 const items = [
   {
@@ -40,6 +41,7 @@ const App = () => {
 
   return (
     <div className="app">
+      <Header />
       <Route path="/">
         <Accordion items={items} />
       </Route>
